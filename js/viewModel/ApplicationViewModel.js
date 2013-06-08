@@ -1,48 +1,44 @@
 function ApplicationViewModel(audioContext) {
-    var that = this;
+    var self = this;
 
-    this.audioContext = audioContext;
-    this.recording = false;
-    this.recorder = null;
+    self.audioContext = audioContext;
+    self.recording = ko.observable(false);
+    self.tracks = ko.observableArray([]);
+    self.audioInput = null;
 
-    this.init = function() {
+    self.init = function() {
         navigator.getUserMedia({ audio: true },
                                function(stream) {
-                                   var inputPoint = that.audioContext.createGainNode();
-                                   var audioInput = that.audioContext.createMediaStreamSource(stream);
-                                   audioInput.connect(inputPoint);
-                                   that.recorder = new Recorder(inputPoint);
-                                   inputPoint.connect(that.audioContext.destination);
+                                   self.audioInput = self.audioContext.createMediaStreamSource(stream);
                                },
                                function(error) {
                                    console.log(error);
                                });
-    }
+    };
 
-    this.toggleRecording = function() {
-        if (this.recording) {
-            this.recorder.stop();
-            this.recording = false;
-        }
-        else {
-            this.recording = true;
-            this.recorder.clear();
-            this.recorder.record();
-        }
-    }
-
-    this.play = function() {
-        if (this.recording) {
-            this.toggleRecording();
-        }
-        this.recorder.getBuffer(function(buffers) {
-            var source = that.audioContext.createBufferSource();
-            var buffer = that.audioContext.createBuffer(2, buffers[0].length, that.audioContext.sampleRate);
-            buffer.getChannelData(0).set(buffers[0]);
-            buffer.getChannelData(1).set(buffers[1]);
-            source.buffer = buffer;
-            source.connect(that.audioContext.destination);
-            source.start(0);
+    self.toggleRecording = function() {
+        self.recording(!self.recording());
+        self.tracks().forEach(function(track) {
+            track.setRecording(self.recording());
         });
+    };
+
+    self.play = function() {
+        if (self.recording()) {
+            return;
+        }
+        // HACK to hopefully get all the tracks to play in time
+        var playStart = Date.now() + 1000;
+        self.tracks().forEach(function(track) {
+            track.play(playStart);
+        });
+    };
+
+    self.addTrack = function() {
+        self.tracks.push(new TrackViewModel(self.audioContext, self.audioInput));
+    };
+
+    self.removeTrack = function(track) {
+        self.tracks.remove(track);
     }
 }
