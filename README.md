@@ -1,6 +1,9 @@
+JAW
+===
 JAW (JavaScript Audio Workstation) - a DAW in your browser!
 
-Inspiration:
+Inspiration & References
+------------------------
 
 Stuart Memo
 http://www.stuartmemo.com/
