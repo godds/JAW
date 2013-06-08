@@ -44,7 +44,7 @@ function TrackViewModel(audioContext, audioInput) {
     (function init() {
         var inputPoint = self.audioContext.createGainNode();
         self.audioInput.connect(inputPoint);
-        self.recorder = new Recorder(inputPoint);
+        self.recorder = new Recorder(inputPoint, { workerPath: "js/libs/recorderjs/recorderWorker.js" });
 //        inputPoint.connect(self.audioContext.destination);
     })();
 }
