@@ -1,3 +1,6 @@
 [submodule "js/libs/recorderjs"]
 	path = js/libs/recorderjs
 	url = https://github.com/mattdiamond/Recorderjs.git
+[submodule "less/twitter-bootstrap"]
+	path = less/twitter-bootstrap
+	url = https://github.com/twitter/bootstrap.git

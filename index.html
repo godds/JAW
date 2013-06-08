@@ -14,14 +14,14 @@
 
   <ul data-bind="foreach: tracks" class="track-list">
     <li class="track">
-      <button data-bind="click: toggleArmed, text: armed() ? 'Disarm' : 'Arm'"></button>
-      <button data-bind="click: $parent.removeTrack">Delete</button>
+      <button data-bind="click: toggleArmed, text: armed() ? 'Disarm' : 'Arm'" class="btn"></button>
+      <button data-bind="click: $parent.removeTrack" class="btn">Delete</button>
     </li>
   </ul>
 
-  <button data-bind="click: toggleRecording, enable: tracks().length, text: recording() ? 'Stop Recording' : 'Start Recording'"></button>
-  <button data-bind="click: play, enable: !recording()">Play</button>
-  <button data-bind="click: addTrack, enable: !recording()">Add Track</button>
+  <button data-bind="click: toggleRecording, enable: tracks().length, text: recording() ? 'Stop Recording' : 'Start Recording'" class="btn"></button>
+  <button data-bind="click: play, enable: !recording()" class="btn">Play</button>
+  <button data-bind="click: addTrack, enable: !recording()" class="btn">Add Track</button>
 
   <script src="js/libs/knockout-2.2.1.js" type="text/javascript"></script>
   <script src="js/libs/recorderjs/recorder.js" type="text/javascript"></script>
