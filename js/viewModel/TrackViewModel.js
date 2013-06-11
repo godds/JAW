@@ -5,6 +5,8 @@ function TrackViewModel(audioContext, audioInput) {
     self.audioInput = audioInput;
     self.recorder = null;
 
+    self.audioMeter = new AudioMeterViewModel(audioContext, audioInput);
+
     self.armed = ko.observable(false);
 
     self.setRecording = function(record) {

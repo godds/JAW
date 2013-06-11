@@ -5274,3 +5274,9 @@ a.badge:focus {
   margin: 10px;
   padding: 10px;
 }
+.track-list .track .audioMeter {
+  width: 50px;
+  background-color: green;
+  display: inline-block;
+  margin: 5px;
+}
