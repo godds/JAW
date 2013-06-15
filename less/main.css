@@ -5275,8 +5275,24 @@ a.badge:focus {
   padding: 10px;
 }
 .track-list .track .audioMeter {
-  width: 50px;
-  background-color: green;
+  height: 80px;
+  width: 10px;
+  background-color: #cce600;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff0000), color-stop(12%, #ffff00), to(#008000));
+  background-image: -webkit-linear-gradient(#ff0000, #ffff00 12%, #008000);
+  background-image: -moz-linear-gradient(top, #ff0000, #ffff00 12%, #008000);
+  background-image: -o-linear-gradient(#ff0000, #ffff00 12%, #008000);
+  background-image: linear-gradient(#ff0000, #ffff00 12%, #008000);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff0000', endColorstr='#ff008000', GradientType=0);
   display: inline-block;
-  margin: 5px;
+  margin: 0;
+  position: relative;
+}
+.track-list .track .audioMeter > .overlay {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #999999;
 }

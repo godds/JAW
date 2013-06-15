@@ -12,10 +12,20 @@
     padding: 10px;
 
     .audioMeter {
-      width: 50px;
-      background-color: green;
+      height: 80px;
+      width: 10px;
+      #gradient > .vertical-three-colors(red, yellow, 12%, green);
       display: inline-block;
-      margin: 5px;
+      margin: 0;
+      position: relative;
+
+      > .overlay {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: @grayLight;
+      }
     }
   }
 }

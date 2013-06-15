@@ -16,8 +16,12 @@
     <li class="track">
       <button data-bind="click: toggleArmed, text: armed() ? 'Disarm' : 'Arm'" class="btn"></button>
       <button data-bind="click: $parent.removeTrack" class="btn">Delete</button>
-      <div data-bind="audioMeter: audioMeter.leftLevel" class="audioMeter left"></div>
-      <div data-bind="audioMeter: audioMeter.rightLevel" class="audioMeter right"></div>
+      <div class="audioMeter left">
+        <div data-bind="audioMeter: audioMeter.leftLevel" class="overlay"></div>
+      </div>
+      <div class="audioMeter right">
+        <div data-bind="audioMeter: audioMeter.rightLevel" class="overlay"></div>
+      </div>
     </li>
   </ul>
 
