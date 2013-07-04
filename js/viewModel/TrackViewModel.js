@@ -34,8 +34,7 @@ function TrackViewModel(audioContext, audioInput) {
             buffer.getChannelData(1).set(buffers[1]);
             source.buffer = buffer;
             source.connect(self.audioContext.destination);
-            // HACK to hopefully get all the tracks to play in time
-            source.start((targetStartTime - Date.now()) / 1000);
+            source.start(targetStartTime);
         });
     };
 

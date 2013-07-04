@@ -3,8 +3,11 @@ function ApplicationViewModel(audioContext) {
 
     self.audioContext = audioContext;
     self.recording = ko.observable(false);
+    self.metronomeEnabled = ko.observable(false);
     self.tracks = ko.observableArray([]);
+    self.metronome = new MetronomeViewModel(self.audioContext);
     self.audioInput = null;
+
 
     self.init = function() {
         navigator.getUserMedia({ audio: true },
@@ -28,7 +31,7 @@ function ApplicationViewModel(audioContext) {
             return;
         }
         // HACK to hopefully get all the tracks to play in time
-        var playStart = Date.now() + 1000;
+        var playStart = self.audioContext.currentTime + 1;
         self.tracks().forEach(function(track) {
             track.play(playStart);
         });

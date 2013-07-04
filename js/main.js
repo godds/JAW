@@ -1,13 +1,10 @@
 (function() {
-    // fix up for prefixing
+    // fix up prefixing for getUserMedia
     navigator.getUserMedia = ( navigator.getUserMedia ||
                                navigator.webkitGetUserMedia ||
                                navigator.mozGetUserMedia ||
                                navigator.msGetUserMedia );
-    window.AudioContext = ( window.AudioContext ||
-                            window.webkitAudioContext ||
-                            window.mozAudioContext ||
-                            window.msAudioContext );
+    // fix up requestAnimationFrame
     (function() {
         var lastTime = 0;
         var vendors = ['webkit', 'moz'];
