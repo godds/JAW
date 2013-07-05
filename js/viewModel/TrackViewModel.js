@@ -1,4 +1,6 @@
 function TrackViewModel(audioContext, audioInput) {
+    "use strict";
+
     var self = this;
 
     self.audioContext = audioContext;
@@ -9,7 +11,7 @@ function TrackViewModel(audioContext, audioInput) {
 
     self.armed = ko.observable(false);
 
-    self.setRecording = function(record) {
+    self.setRecording = function (record) {
         if (!self.armed()) {
             return;
         }
@@ -22,8 +24,8 @@ function TrackViewModel(audioContext, audioInput) {
         }
     };
 
-    self.play = function(targetStartTime) {
-        self.recorder.getBuffer(function(buffers) {
+    self.play = function (targetStartTime) {
+        self.recorder.getBuffer(function (buffers) {
             // HACK, probably naive error prevention checking
             if (!buffers.length || !buffers[0].length || !buffers[1].length) {
                 return;
@@ -38,7 +40,7 @@ function TrackViewModel(audioContext, audioInput) {
         });
     };
 
-    self.toggleArmed = function() {
+    self.toggleArmed = function () {
         self.armed(!self.armed());
     };
 
@@ -47,5 +49,5 @@ function TrackViewModel(audioContext, audioInput) {
         self.audioInput.connect(inputPoint);
         self.recorder = new Recorder(inputPoint, { workerPath: "js/libs/recorderjs/recorderWorker.js" });
 //        inputPoint.connect(self.audioContext.destination);
-    })();
+    }());
 }

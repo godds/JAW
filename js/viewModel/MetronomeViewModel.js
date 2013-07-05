@@ -1,4 +1,6 @@
 function MetronomeViewModel(audioContext) {
+    "use strict";
+
     var self = this;
 
     self.requestID;
@@ -12,15 +14,15 @@ function MetronomeViewModel(audioContext) {
     self.nextStepTime = 0;
     self.scheduleAheadTime = 0.1;
 
-    self.start = function() {
+    self.start = function () {
         self.looper();
     };
 
-    self.stop = function() {
+    self.stop = function () {
         cancelAnimationFrame(self.requestID);
     };
 
-    self.looper = function() {
+    self.looper = function () {
         while (self.nextStepTime < self.audioContext.currentTime + self.scheduleAheadTime) {
             self.scheduleNote(self.currentStep, self.nextStepTime);
             self.nextStep();
@@ -28,19 +30,19 @@ function MetronomeViewModel(audioContext) {
         self.requestID = requestAnimationFrame(self.looper);
     };
 
-    self.nextStep = function() {
+    self.nextStep = function () {
         var secondsPerBeat = 60 / self.bpm();
         self.nextStepTime += secondsPerBeat / 4;
         self.currentStep = (self.currentStep + 1) % 16;
     };
 
-    self.scheduleNote = function(step, time) {
+    self.scheduleNote = function (step, time) {
         // if we only want to play 8th notes
-        if (self.beatResolution() == 1 && step % 2) {
+        if (self.beatResolution() === 1 && step % 2) {
             return;
         }
         // if we only want to play quarter notes
-        if (self.beatResolution() == 2 && step % 4) {
+        if (self.beatResolution() === 2 && step % 4) {
             return;
         }
 

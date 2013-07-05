@@ -1,4 +1,6 @@
 function AudioMeterViewModel(audioContext, audioInput) {
+    "use strict";
+
     var self = this;
 
     self.audioContext = audioContext;
@@ -8,8 +10,8 @@ function AudioMeterViewModel(audioContext, audioInput) {
     self.leftLevel = ko.observable(0);
     self.rightLevel = ko.observable(0);
 
-    self.onAudioProcess = function(e) {
-        var getMaxDecibel = function(channelData) {
+    self.onAudioProcess = function (e) {
+        var getMaxDecibel = function (channelData) {
             var maxMagnitude = Math.max.apply(null, channelData);
             return 20 * Math.log(Math.max(maxMagnitude, Math.pow(10, -72 / 20))) / Math.LN10;
         };
@@ -34,18 +36,18 @@ function AudioMeterViewModel(audioContext, audioInput) {
         self.processor.connect(muteNode);
         muteNode.connect(audioContext.destination);
         self.processor.onaudioprocess = self.onAudioProcess;
-    })();
+    }());
 }
 
 ko.bindingHandlers.audioMeter = {
-//    init: function(element, valueAccessor) {
+//    init: function (element, valueAccessor) {
 //
 //    },
-    update: function(element, valueAccessor) {
-        var value = ko.utils.unwrapObservable(valueAccessor());
-        var top = 0;
-        var width = 50;
-        var height = value;
+    update: function (element, valueAccessor) {
+        var value = ko.utils.unwrapObservable(valueAccessor()),
+            top = 0,
+            width = 50,
+            height = value;
         element.style.height = (value * -1) + "px";
         //element.style.clipPath = "polygon(" + top + "px, 0px, " + width + "px, " + height + "px, 0, 0)";
     }

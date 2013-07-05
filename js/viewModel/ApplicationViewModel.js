@@ -1,4 +1,6 @@
 function ApplicationViewModel(audioContext) {
+    "use strict";
+
     var self = this;
 
     self.audioContext = audioContext;
@@ -9,30 +11,30 @@ function ApplicationViewModel(audioContext) {
     self.audioInput = null;
 
 
-    self.init = function() {
+    self.init = function () {
         navigator.getUserMedia({ audio: true },
-                               function(stream) {
+                               function (stream) {
                                    self.audioInput = self.audioContext.createMediaStreamSource(stream);
                                },
-                               function(error) {
+                               function (error) {
                                    console.log(error);
                                });
     };
 
-    self.toggleRecording = function() {
+    self.toggleRecording = function () {
         self.recording(!self.recording());
-        self.tracks().forEach(function(track) {
+        self.tracks().forEach(function (track) {
             track.setRecording(self.recording());
         });
     };
 
-    self.play = function() {
+    self.play = function () {
         if (self.recording()) {
             return;
         }
         // HACK to hopefully get all the tracks to play in time
         var playStart = self.audioContext.currentTime + 1;
-        self.tracks().forEach(function(track) {
+        self.tracks().forEach(function (track) {
             track.play(playStart);
         });
         if (self.metronomeEnabled()) {
@@ -40,11 +42,11 @@ function ApplicationViewModel(audioContext) {
         }
     };
 
-    self.addTrack = function() {
+    self.addTrack = function () {
         self.tracks.push(new TrackViewModel(self.audioContext, self.audioInput));
     };
 
-    self.removeTrack = function(track) {
+    self.removeTrack = function (track) {
         self.tracks.remove(track);
-    }
+    };
 }
