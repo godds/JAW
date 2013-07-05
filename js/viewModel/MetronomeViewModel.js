@@ -5,11 +5,12 @@ function MetronomeViewModel(audioContext) {
 
     self.audioContext = audioContext;
     self.bpm = ko.observable(120);
-    // TODO self.timeSignature = 0;
+    self.beatResolution = ko.observable(2); // 0 = 16th, 1 = 8th, 2 = quarter note
+    // TODO self.timeSignature = 0; // currently assuming 4/4
 
-    var currentStep = 0;
-    var nextStepTime = 0;
-    var scheduleAheadTime = 0.1;
+    self.currentStep = 0;
+    self.nextStepTime = 0;
+    self.scheduleAheadTime = 0.1;
 
     self.start = function() {
         looper();
@@ -19,20 +20,29 @@ function MetronomeViewModel(audioContext) {
         cancelAnimationFrame(requestID);
     };
 
-    var looper = function() {
-        while (nextStepTime < audioContext.currentTime + scheduleAheadTime) {
-            scheduleNote(currentStep, nextStepTime);
+    self.looper = function() {
+        while (self.nextStepTime < self.audioContext.currentTime + self.scheduleAheadTime) {
+            scheduleNote(self.currentStep, self.nextStepTime);
             nextStep();
         }
     };
 
-    var nextStep = function() {
+    self.nextStep = function() {
         var secondsPerBeat = 60 / self.bpm();
-        nextStepTime += secondsPerBeat / 4;
-        currentStep = (currentStep + 1) % 16;
+        self.nextStepTime += secondsPerBeat / 4;
+        self.currentStep = (self.currentStep + 1) % 16;
     };
 
-    var scheduleNote = function(step, time) {
+    self.scheduleNote = function(step, time) {
+        // if we only want to play 8th notes
+        if (self.beatResolution == 1 && step % 2) {
+            return;
+        }
+        // if we only want to play quarter notes
+        if (self.beatResolution == 2 && step % 4) {
+            return;
+        }
+
         var osc = self.audioContext.createOscillator();
         osc.connect(self.audioContext.destination);
         if (step % 16 === 0) {
