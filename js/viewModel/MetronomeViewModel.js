@@ -1,7 +1,7 @@
 function MetronomeViewModel(audioContext) {
     var self = this;
 
-    var requestID;
+    self.requestID;
 
     self.audioContext = audioContext;
     self.bpm = ko.observable(120);
@@ -13,17 +13,17 @@ function MetronomeViewModel(audioContext) {
     self.scheduleAheadTime = 0.1;
 
     self.start = function() {
-        looper();
+        self.looper();
     };
 
     self.stop = function() {
-        cancelAnimationFrame(requestID);
+        cancelAnimationFrame(self.requestID);
     };
 
     self.looper = function() {
         while (self.nextStepTime < self.audioContext.currentTime + self.scheduleAheadTime) {
-            scheduleNote(self.currentStep, self.nextStepTime);
-            nextStep();
+            self.scheduleNote(self.currentStep, self.nextStepTime);
+            self.nextStep();
         }
     };
 
