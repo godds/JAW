@@ -35,10 +35,8 @@ function ApplicationViewModel(audioContext) {
         self.tracks().forEach(function(track) {
             track.play(playStart);
         });
-        if (metronomeEnabled()) {
-            self.metronome.start(playStart);
-            // HACK should be able to stop this in more sensible way
-            self.metronome.stop(playStart + 60);
+        if (self.metronomeEnabled()) {
+            self.metronome.start();
         }
     };
 

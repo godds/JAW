@@ -25,6 +25,7 @@ function MetronomeViewModel(audioContext) {
             self.scheduleNote(self.currentStep, self.nextStepTime);
             self.nextStep();
         }
+        self.requestID = requestAnimationFrame(self.looper);
     };
 
     self.nextStep = function() {
@@ -35,11 +36,11 @@ function MetronomeViewModel(audioContext) {
 
     self.scheduleNote = function(step, time) {
         // if we only want to play 8th notes
-        if (self.beatResolution == 1 && step % 2) {
+        if (self.beatResolution() == 1 && step % 2) {
             return;
         }
         // if we only want to play quarter notes
-        if (self.beatResolution == 2 && step % 4) {
+        if (self.beatResolution() == 2 && step % 4) {
             return;
         }
 
