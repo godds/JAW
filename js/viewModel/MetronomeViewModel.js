@@ -7,14 +7,15 @@ function MetronomeViewModel(audioContext) {
 
     self.audioContext = audioContext;
     self.bpm = ko.observable(120);
-    self.beatResolution = ko.observable(2); // 0 = 16th, 1 = 8th, 2 = quarter note
-    // TODO self.timeSignature = 0; // currently assuming 4/4
+    self.beatCount = ko.observable(4);
+    self.beatResolution = ko.observable(4); // 16 = 16th, 8 = 8th, 4 = quarter note, 2 = half note
 
     self.currentStep = 0;
     self.nextStepTime = 0;
     self.scheduleAheadTime = 0.1;
 
     self.start = function () {
+        self.nextStepTime = self.audioContext.currentTime;
         self.looper();
     };
 
@@ -32,26 +33,27 @@ function MetronomeViewModel(audioContext) {
 
     self.nextStep = function () {
         var secondsPerBeat = 60 / self.bpm();
-        self.nextStepTime += secondsPerBeat / 4;
-        self.currentStep = (self.currentStep + 1) % 16;
+        self.nextStepTime += secondsPerBeat / self.beatCount();
+        self.currentStep = (self.currentStep + 1) % (self.beatCount() * (16 / self.beatResolution()));
     };
 
     self.scheduleNote = function (step, time) {
-        // if we only want to play 8th notes
-        if (self.beatResolution() === 1 && step % 2) {
+        // if we are only playing half notes
+        if (self.beatResolution() === 2 && step % 8) {
             return;
         }
-        // if we only want to play quarter notes
-        if (self.beatResolution() === 2 && step % 4) {
+        // if we are only playing quarter notes
+        else if (self.beatResolution() === 4 && step % 4) {
+            return;
+        }
+        // if we are only playing 8th notes
+        else if (self.beatResolution() === 8 && step % 2) {
             return;
         }
 
         var osc = self.audioContext.createOscillator();
         osc.connect(self.audioContext.destination);
-        if (step % 16 === 0) {
-            osc.frequency.value = 220.0;
-        }
-        else if (step % 4) {
+        if (step === 0) {
             osc.frequency.value = 440.0;
         }
         else {
