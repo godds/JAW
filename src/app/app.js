@@ -2,7 +2,8 @@ angular.module("jaws", [
         "templates-app",
         "templates-common",
         "ui.state",
-        "ui.route"
+        "ui.route",
+        "jaws.home"
     ])
 
     .config(function myAppConfig($stateProvider, $urlRouterProvider) {
