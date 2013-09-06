@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="JAWs" ng-controller="AppCtrl">
+<head>
+  <title>JAWs</title>
+
+  <% styles.forEach(function(file) { %>
+  <link rel="stylesheet" type="text/css" href="<% file %>" /><% }); %>
+
+  <% scripts.forEach( function ( file ) { %>
+  <script type="text/javascript" src="<%= file %>"></script><% }); %>
+</head>
+<body>
+
+  <!--<div ui-view="menu"></div>-->
+
+  <!--<div ui-view="main"></div>-->
+
+  <div class="container">
+    <h1>JAWs</h1>
+  </div>
+
+</body>
+</html>

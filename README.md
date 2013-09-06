@@ -1,15 +1,11 @@
-JAW
-===
-JAW (JavaScript Audio Workstation) - a DAW in your browser!
+#JAWs
 
-Inspiration & References
-------------------------
+**JAWs (JavaScript Audio Workstation)** - a DAW in your browser!
 
-Stuart Memo
-http://www.stuartmemo.com/
+##Inspiration & References
 
-Chris Wilson's Web Audio Demos
-http://webaudiodemos.appspot.com/
+[Stuart Memo](http://www.stuartmemo.com/)
 
-Matt Diamond's RecorderJS
-https://github.com/mattdiamond/Recorderjs
+[Chris Wilson's Web Audio Demos](http://webaudiodemos.appspot.com/)
+
+[Matt Diamond's RecorderJS](https://github.com/mattdiamond/Recorderjs)
