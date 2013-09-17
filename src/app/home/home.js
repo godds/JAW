@@ -1,5 +1,6 @@
 angular.module("jaws.home", [
-    "ui.state"
+    "ui.state",
+    "audio-utils"
 ])
 
 .config(function config($stateProvider) {
@@ -14,8 +15,11 @@ angular.module("jaws.home", [
     });
 })
 
-.controller("HomeCtrl", function HomeController($scope) {
+.controller("HomeCtrl", function HomeController($scope, audio) {
     $scope.title = "JAWs";
+
+    var temp = audio.createGain();
+    var temp2 = audio.createNoise();
 })
 
 ;
