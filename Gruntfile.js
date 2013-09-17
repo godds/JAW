@@ -1,5 +1,6 @@
-module.exports = function ( grunt ) {
-
+module.exports = function (grunt) {
+    'use strict';
+    
     /**
      * Load required Grunt tasks. These are installed based on the versions listed
      * in `package.json` when you do `npm install` in this directory.
@@ -20,7 +21,7 @@ module.exports = function ( grunt ) {
     /**
      * Load in our build configuration file.
      */
-    var userConfig = require( './build.config.js' );
+    var userConfig = require('./build.config.js');
 
     /**
      * This is the configuration object Grunt uses to give each plugin its
@@ -453,7 +454,7 @@ module.exports = function ( grunt ) {
         }
     };
 
-    grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
+    grunt.initConfig(grunt.util._.extend(taskConfig, userConfig));
 
     /**
      * In order to make it safe to just compile or copy *only* what was changed,
@@ -462,18 +463,18 @@ module.exports = function ( grunt ) {
      * `delta`) and then add a new task called `watch` that does a clean build
      * before watching for changes.
      */
-    grunt.renameTask( 'watch', 'delta' );
-    grunt.registerTask( 'watch', [ 'build', 'karma:unit', 'delta' ] );
+    grunt.renameTask('watch', 'delta');
+    grunt.registerTask('watch', [ 'build', 'karma:unit', 'delta' ]);
 
     /**
      * The default task is to build and compile.
      */
-    grunt.registerTask( 'default', [ 'build', 'compile' ] );
+    grunt.registerTask('default', [ 'build', 'compile' ]);
 
     /**
      * The `build` task gets your app ready to run for development and testing.
      */
-    grunt.registerTask( 'build', [
+    grunt.registerTask('build', [
         'clean', 'html2js', 'jshint', 'recess:build',
         'copy:build_assets', 'copy:build_appjs', 'copy:build_vendorjs',
         'index:build', 'karmaconfig', 'karma:continuous'
@@ -483,25 +484,25 @@ module.exports = function ( grunt ) {
      * The `compile` task gets your app ready for deployment by concatenating and
      * minifying your code.
      */
-    grunt.registerTask( 'compile', [
+    grunt.registerTask('compile', [
         'recess:compile', 'copy:compile_assets', 'ngmin', 'concat', 'uglify', 'index:compile'
     ]);
 
     /**
      * A utility function to get all app JavaScript sources.
      */
-    function filterForJS ( files ) {
-        return files.filter( function ( file ) {
-            return file.match( /\.js$/ );
+    function filterForJS(files) {
+        return files.filter(function (file) {
+            return file.match(/\.js$/);
         });
     }
 
     /**
      * A utility function to get all app CSS sources.
      */
-    function filterForCSS ( files ) {
-        return files.filter( function ( file ) {
-            return file.match( /\.css$/ );
+    function filterForCSS(files) {
+        return files.filter(function (file) {
+            return file.match(/\.css$/);
         });
     }
 
@@ -511,22 +512,22 @@ module.exports = function ( grunt ) {
      * the list into variables for the template to use and then runs the
      * compilation.
      */
-    grunt.registerMultiTask( 'index', 'Process index.html template', function () {
-        var dirRE = new RegExp( '^('+grunt.config('build_dir')+'|'+grunt.config('compile_dir')+')\/', 'g' );
-        var jsFiles = filterForJS( this.filesSrc ).map( function ( file ) {
-            return file.replace( dirRE, '' );
+    grunt.registerMultiTask('index', 'Process index.html template', function () {
+        var dirRE = new RegExp('^(' + grunt.config('build_dir') + '|' + grunt.config('compile_dir') + ')\/', 'g');
+        var jsFiles = filterForJS(this.filesSrc).map(function (file) {
+            return file.replace(dirRE, '');
         });
-        var cssFiles = filterForCSS( this.filesSrc ).map( function ( file ) {
-            return file.replace( dirRE, '' );
+        var cssFiles = filterForCSS(this.filesSrc).map(function (file) {
+            return file.replace(dirRE, '');
         });
 
         grunt.file.copy('src/index.html', this.data.dir + '/index.html', {
-            process: function ( contents, path ) {
-                return grunt.template.process( contents, {
+            process: function (contents, path) {
+                return grunt.template.process(contents, {
                     data: {
                         scripts: jsFiles,
                         styles: cssFiles,
-                        version: grunt.config( 'pkg.version' )
+                        version: grunt.config('pkg.version')
                     }
                 });
             }
@@ -538,12 +539,12 @@ module.exports = function ( grunt ) {
      * run, we use grunt to manage the list for us. The `karma/*` files are
      * compiled as grunt templates for use by Karma. Yay!
      */
-    grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
-        var jsFiles = filterForJS( this.filesSrc );
+    grunt.registerMultiTask('karmaconfig', 'Process karma config templates', function() {
+        var jsFiles = filterForJS(this.filesSrc);
 
-        grunt.file.copy( 'karma/karma-unit.tpl.js', grunt.config( 'build_dir' ) + '/karma-unit.js', {
-            process: function ( contents, path ) {
-                return grunt.template.process( contents, {
+        grunt.file.copy('karma/karma-unit.tpl.js', grunt.config('build_dir') + '/karma-unit.js', {
+            process: function(contents, path) {
+                return grunt.template.process(contents, {
                     data: {
                         scripts: jsFiles
                     }
