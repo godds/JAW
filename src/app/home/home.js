@@ -1,6 +1,6 @@
 angular.module("jaws.home", [
     "ui.state",
-    "audio-utils"
+    "audio.metronome"
 ])
 
 .config(function config($stateProvider) {
@@ -15,11 +15,18 @@ angular.module("jaws.home", [
     });
 })
 
-.controller("HomeCtrl", function HomeController($scope, audio) {
-    $scope.title = "JAWs";
+.controller("HomeCtrl", function HomeController($scope, metronome) {
+    var metronomeOn = false;
 
-    var temp = audio.createGain();
-    var temp2 = audio.createNoise();
+    $scope.toggleMetronome = function() {
+        if (metronomeOn) {
+            metronome.stop();
+        }
+        else {
+            metronome.start();
+        }
+        metronomeOn = !metronomeOn;
+    };
 })
 
 ;

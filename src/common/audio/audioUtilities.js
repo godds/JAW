@@ -1,4 +1,4 @@
-angular.module("audio-utils", [])
+angular.module("audio", [])
 
 .factory("audio", function audioUtils () {
     var audioContext = new AudioContext();
@@ -19,7 +19,7 @@ angular.module("audio-utils", [])
         },
         createOscillator: function (type, frequency) {
             var node = audioContext.createOscillator();
-            node.type = type || "sine"; // should this be node[type] || node.SINE?
+            node.type = type || "sine";
             node.frequency.value = frequency || 440;
             return node;
         },
