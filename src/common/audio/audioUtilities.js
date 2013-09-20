@@ -65,7 +65,11 @@ angular.module("audio", [])
         createLFO: function (settings) {
             var osc = createOscillator(),
                 gain = createGain();
-            settings = angular.extend({ frequency: 0, type: "triangle", depth: 1, target: null, autoStart: !1 },
+            settings = angular.extend({ frequency: 0,
+                                        type: "triangle",
+                                        depth: 1,
+                                        target: null,
+                                        autoStart: !1 },
                                       settings);
             osc.type = osc[settings.type];
             gain.gain.value = settings.depth;
@@ -88,6 +92,18 @@ angular.module("audio", [])
         //createEnvelope: function (settings) {
         //    return null;
         //},
+        createBuffer: function (buffers, sampleRate) {
+            var source = audioContext.createBufferSource();
+            var buffer = audioContext.createBuffer(buffers.length,
+                                                   buffers[0].length,
+                                                   sampleRate || audioContext.sampleRate);
+            for (var i = 0, len = buffers.length; i < len; i++) {
+                buffer.getChannelData(i).set(buffers[i]);
+            }
+            source.buffer = buffer;
+            return source;
+        },
+
         connect: function () {
             for (var i = 0; i < arguments.length - 1; i++) {
                 if (Array.isArray(arguments[i])) {
@@ -118,20 +134,14 @@ angular.module("audio", [])
         disconnect: function (node) {
             node.disconnect();
         },
-
-        //createbuffer
         //reverse
-        getAudioStream: function () {
-            // TODO return promise? (or equivalent)
-
-            /*navigator.getUserMedia({ audio: true },
-                function (stream) {
-                    return audioContext.createMediaStreamSource(stream);
-                },
-                function (error) {
-                    console.log(error);
-                });*/
-            return null;
+        getAudioStream: function(success, error) {
+            navigator.getUserMedia({ audio: true },
+                                   function(stream) {
+                                       var node = audioContext.createMediaStreamSource(stream);
+                                       success(node);
+                                   },
+                                   error);
         }
     };
 })

@@ -1,1 +1,16 @@
-<button class="btn btn-default" ng-click="toggleMetronome()">Metronome</button>
+<ul>
+    <li class="btn btn-default" ng-repeat="track in tracks">
+      <button class="btn btn-default" ng-click="toggleArmed(track)">Arm</button>
+      <button class="btn btn-default" ng-click="deleteTrack(track)">Delete</button>
+    </li>
+</ul>
+
+<div>
+    <button class="btn btn-default" ng-click="toggleRecording()">Record</button>
+    <button class="btn btn-default" ng-click="play()">Play</button>
+    <button class="btn btn-default" ng-click="addTrack()">Add Track</button>
+</div>
+
+<div>
+    <input type="checkbox" ng-model="metronomeOn">Metronome</input>
+</div>
