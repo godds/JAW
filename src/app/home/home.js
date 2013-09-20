@@ -41,7 +41,10 @@ angular.module("jaws.home", [
         $scope.tracks.push(new Track(audio, input));
     };
     $scope.deleteTrack = function(track) {
-        // TODO
+        var index = $scope.tracks.indexOf(track);
+        if (index != -1) {
+            $scope.tracks.splice(index, 1);
+        }
     };
 
     $scope.toggleRecording = function() {
