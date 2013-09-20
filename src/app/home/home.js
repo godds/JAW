@@ -66,6 +66,12 @@ angular.module("jaws.home", [
             metronome.start(); // HOW TO STOP THE METRONOME?
         }
     };
+    $scope.recordingLabel = function() {
+        return recording ? "Stop Recording" : "Start Recording";
+    };
+    $scope.trackArmedLabel = function(track) {
+        return track && track.armed ? "Disarm" : "Arm";
+    };
 })
 
 ;
