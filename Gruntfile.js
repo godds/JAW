@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     'use strict';
-    
+
     /**
      * Load required Grunt tasks. These are installed based on the versions listed
      * in `package.json` when you do `npm install` in this directory.
@@ -17,6 +17,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ngmin');
     grunt.loadNpmTasks('grunt-html2js');
+    grunt.loadNpmTasks('grunt-autoprefixer');
 
     /**
      * Load in our build configuration file.
@@ -222,6 +223,21 @@ module.exports = function (grunt) {
                     noIDs: false,
                     zeroUnits: false
                 }
+            }
+        },
+
+        /**
+         * 'autoprefixer' automagically adds browser-specific prefixes to CSS
+         * properties, as appropriate.
+         */
+        autoprefixer: {
+            build: {
+                src: [ '<%= recess.build.dest %>' ],
+                dest: '<%= recess.build.dest %>'
+            },
+            compile: {
+                src: [ '<%= recess.build.dest %>' ],
+                dest: '<%= recess.build.dest %>'
             }
         },
 
@@ -435,7 +451,7 @@ module.exports = function (grunt) {
              */
             less: {
                 files: [ 'src/**/*.less' ],
-                tasks: [ 'recess:build' ]
+                tasks: [ 'recess:build', 'autoprefixer:build' ]
             },
 
             /**
@@ -475,7 +491,7 @@ module.exports = function (grunt) {
      * The `build` task gets your app ready to run for development and testing.
      */
     grunt.registerTask('build', [
-        'clean', 'html2js', 'jshint', 'recess:build',
+        'clean', 'html2js', 'jshint', 'recess:build', 'autoprefixer:build',
         'copy:build_assets', 'copy:build_appjs', 'copy:build_vendorjs',
         'index:build', 'karmaconfig', 'karma:continuous'
     ]);
@@ -485,7 +501,8 @@ module.exports = function (grunt) {
      * minifying your code.
      */
     grunt.registerTask('compile', [
-        'recess:compile', 'copy:compile_assets', 'ngmin', 'concat', 'uglify', 'index:compile'
+        'recess:compile', 'autoprefixer:compile', 'copy:compile_assets',
+        'ngmin', 'concat', 'uglify', 'index:compile'
     ]);
 
     /**
