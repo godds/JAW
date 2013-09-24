@@ -31,6 +31,9 @@ angular.module("audio", [])
         createAnalyser: function () {
             return audioContext.createAnalyser();
         },
+        createScriptProcessor: function(bufferSize, numberOfInputChannels, numberOfOutputChannels) {
+            return audioContext.createScriptProcessor(bufferSize, numberOfInputChannels, numberOfOutputChannels);
+        },
         createFilter: function (type) {
             var node = audioContext.createBiquadFilter();
             node.type = type || node.type;

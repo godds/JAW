@@ -6,6 +6,7 @@ function Track(audio, input) {
     var recorder = new Recorder(level, { workerPath: "src/common/audio/recorder/recorderWorker.js" }),
         track = {
             armed: false,
+            input: input,
             setRecording: function(record) {
                 if (!track.armed) {
                     return;

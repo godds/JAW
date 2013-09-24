@@ -1,8 +1,9 @@
 <div>
     <ul class="tracks">
-        <li class="btn btn-default" ng-repeat="track in tracks">
-          <button class="btn btn-default" ng-click="toggleArmed(track)">{{ trackArmedLabel(track) }}</button>
-          <button class="btn btn-default" ng-click="deleteTrack(track)">Delete</button>
+        <li ng-repeat="track in tracks">
+            <audio-meter input="track.input" armed="track.armed"></audio-meter>
+            <button class="btn btn-default" ng-click="toggleArmed(track)">{{ trackArmedLabel(track) }}</button>
+            <button class="btn btn-default" ng-click="deleteTrack(track)">Delete</button>
         </li>
     </ul>
 

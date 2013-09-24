@@ -1,7 +1,8 @@
 angular.module("jaws.home", [
     "ui.state",
     "audio",
-    "audio.metronome"
+    "audio.metronome",
+    "jaws.home.audiometer"
 ])
 
 .config(function config($stateProvider) {
