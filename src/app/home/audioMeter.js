@@ -22,9 +22,7 @@ angular.module("jaws.home.audiometer", [])
                     return 20 * Math.log(Math.max(maxMagnitude, Math.pow(10, -72 / 20))) / Math.LN10;
                 };
                 var value = getMaxDecibel(e.inputBuffer.getChannelData(0));
-                console.log(value);
-                // TODO get hold of overlay
-                //element.style.height = (value * -1) + "px";
+                element.children()[0].style.height = (value * -1) + "px";
             }
 
             function toggleProcessor() {
